@@ -9,7 +9,8 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    static int pi[] = {1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8, 9, 7, 9, 3, 2, 3, 8, 4, 6, 2, 6, 4, 3, 3, 8, 3, 2, 7, 9, 5, 0, 2, 8, 8, 4, 1, 9, 7, 1, 6, 9, 3, 9, 9, 3, 7, 5, 1, 0, 5, 8, 2, 0, 9, 7, 4, 9, 4, 4, 5, 9, 2, 3, 0, 7, 8, 1, 6, 4, 0, 6, 2, 8, 6, 2, 0, 8, 9, 9, 8, 6, 2, 8, 0, 3, 4, 8, 2, 5, 3, 4, 2, 1, 1, 7, 0, 6, 7};
+  static final int PI[] = {1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8, 9, 7, 9, 3, 2, 3, 8, 4, 6, 2, 6, 4, 3, 3, 8, 3, 2, 7, 9, 5, 0, 2, 8, 8, 4, 1, 9, 7, 1, 6, 9, 3, 9, 9, 3, 7, 5, 1, 0, 5, 8, 2, 0, 9, 7, 4, 9, 4, 4, 5, 9, 2, 3, 0, 7, 8, 1, 6, 4, 0, 6, 2, 8, 6, 2, 0, 8, 9, 9, 8, 6, 2, 8, 0, 3, 4, 8, 2, 5, 3, 4, 2, 1, 1, 7, 0, 6, 7};
+  static final int ALPHABET_LENGHT = 26;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,29 +20,17 @@ public class MainActivity extends AppCompatActivity {
         StartProcess();
     }
 
-    static String EncryptPi(String value) {
-
+    private String EncryptPi(String value) {
         char[] buffer = value.toCharArray();
-
+        char letter;
         for (int i = 0; i < buffer.length; i++) {
-
-            char letter = buffer[i];
-
-            if (Character.isLetter(letter)) {
-                letter = (char) (letter + pi[i]);
-
-                if (Character.isUpperCase(letter)) {
-                    if (letter > 'Z') {
-                        letter = (char) (letter - 26);
-                    } else if (letter < 'A') {
-                        letter = (char) (letter + 26);
-                    }
-                }else {
-                    if (letter > 'z') {
-                        letter = (char) (letter - 26);
-                    } else if (letter < 'a') {
-                        letter = (char) (letter + 26);
-                    }
+            letter = buffer[i];
+            if((letter>='a' && letter<='z') || (letter>='A' && letter<='Z')){
+                letter = (char) (letter + PI[i]);
+                if(letter > 'z'){
+                    letter = (char) ((letter%'z')+'a'-1);
+                }else if(letter>'Z' && letter<'a'){
+                    letter = (char) ((letter%'Z')+'A'-1);
                 }
             }
 
@@ -50,33 +39,16 @@ public class MainActivity extends AppCompatActivity {
         return new String(buffer);
     }
 
-    static String DecryptPi(String value){
-
+    private String DecryptPi(String value){
+        char letter;
         char[] buffer = value.toCharArray();
-
         for (int i = 0; i < buffer.length; i++) {
-
-            char letter = buffer[i];
-
-            if (Character.isLetter(letter)) {
-                letter = (char) (letter - pi[i]);
-
-                if (Character.isUpperCase(letter)) {
-                    if (letter > 'Z') {
-                        letter = (char) (letter - 26);
-                    } else if (letter < 'A') {
-                        letter = (char) (letter + 26);
-                    }
-
-                    buffer[i] = letter;
-
-                }
-                else {
-                    if (letter > 'z') {
-                        letter = (char) (letter - 26);
-                    } else if (letter < 'a'){
-                        letter = (char) (letter + 26);
-                    }
+            letter = buffer[i];
+            //is character
+            if(Character.isLetter(letter)){
+                letter = (char) (letter - PI[i]);
+                if(letter < 'A' || (letter<'a' && letter>'Z')){
+                    letter = (char) (letter+ALPHABET_LENGHT);
                 }
             }
             buffer[i] = letter;
