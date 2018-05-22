@@ -10,7 +10,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
   static final int PI[] = {1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8, 9, 7, 9, 3, 2, 3, 8, 4, 6, 2, 6, 4, 3, 3, 8, 3, 2, 7, 9, 5, 0, 2, 8, 8, 4, 1, 9, 7, 1, 6, 9, 3, 9, 9, 3, 7, 5, 1, 0, 5, 8, 2, 0, 9, 7, 4, 9, 4, 4, 5, 9, 2, 3, 0, 7, 8, 1, 6, 4, 0, 6, 2, 8, 6, 2, 0, 8, 9, 9, 8, 6, 2, 8, 0, 3, 4, 8, 2, 5, 3, 4, 2, 1, 1, 7, 0, 6, 7};
-  static final int ALPHABET_LENGHT = 26;
+  static final int ALPHABET_LENGTH = 26;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,12 +20,11 @@ public class MainActivity extends AppCompatActivity {
         StartProcess();
     }
 
-    private String EncryptPi(String value) {
+    static String EncryptPi(String value) {
         char[] buffer = value.toCharArray();
-        char letter;
         for (int i = 0; i < buffer.length; i++) {
-            letter = buffer[i];
-            if((letter>='a' && letter<='z') || (letter>='A' && letter<='Z')){
+            char letter = buffer[i];
+            if(Character.isLetter(letter)){
                 letter = (char) (letter + PI[i]);
                 if(letter > 'z'){
                     letter = (char) ((letter%'z')+'a'-1);
@@ -39,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         return new String(buffer);
     }
 
-    private String DecryptPi(String value){
+    static String DecryptPi(String value){
         char letter;
         char[] buffer = value.toCharArray();
         for (int i = 0; i < buffer.length; i++) {
@@ -47,8 +46,8 @@ public class MainActivity extends AppCompatActivity {
             //is character
             if(Character.isLetter(letter)){
                 letter = (char) (letter - PI[i]);
-                if(letter < 'A' || (letter<'a' && letter>'Z')){
-                    letter = (char) (letter+ALPHABET_LENGHT);
+                if(letter < 'A' || (letter > 'Z' && letter < 'a') || (Character.isUpperCase(letter) != Character.isUpperCase(letter+PI[i]))){
+                    letter = (char) (letter+ALPHABET_LENGTH);
                 }
             }
             buffer[i] = letter;
