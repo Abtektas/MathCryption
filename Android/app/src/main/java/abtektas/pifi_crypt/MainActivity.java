@@ -11,6 +11,8 @@ public class MainActivity extends AppCompatActivity {
 
   static final int PI[] = {1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8, 9, 7, 9, 3, 2, 3, 8, 4, 6, 2, 6, 4, 3, 3, 8, 3, 2, 7, 9, 5, 0, 2, 8, 8, 4, 1, 9, 7, 1, 6, 9, 3, 9, 9, 3, 7, 5, 1, 0, 5, 8, 2, 0, 9, 7, 4, 9, 4, 4, 5, 9, 2, 3, 0, 7, 8, 1, 6, 4, 0, 6, 2, 8, 6, 2, 0, 8, 9, 9, 8, 6, 2, 8, 0, 3, 4, 8, 2, 5, 3, 4, 2, 1, 1, 7, 0, 6, 7};
   static final int ALPHABET_LENGTH = 26;
+  private EditText inputText, outputText;
+  private Button encrypt, decrypt, cleanTextFields;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,10 +22,11 @@ public class MainActivity extends AppCompatActivity {
         StartProcess();
     }
 
-    static String EncryptPi(String value) {
+    private String EncryptPi(String value) {
+        char letter;
         char[] buffer = value.toCharArray();
         for (int i = 0; i < buffer.length; i++) {
-            char letter = buffer[i];
+            letter = buffer[i];
             if(Character.isLetter(letter)){
                 letter = (char) (letter + PI[i]);
                 if(letter > 'z'){
@@ -38,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         return new String(buffer);
     }
 
-    static String DecryptPi(String value){
+    private String DecryptPi(String value){
         char letter;
         char[] buffer = value.toCharArray();
         for (int i = 0; i < buffer.length; i++) {
@@ -57,34 +60,34 @@ public class MainActivity extends AppCompatActivity {
 
     public void StartProcess(){
 
-        final EditText InputText = (EditText) findViewById(R.id.MessageInputTextField);
-        final EditText OutputText = (EditText) findViewById(R.id.MessageOutputTextField);
+        inputText = (EditText) findViewById(R.id.MessageInputTextField);
+        outputText  = (EditText) findViewById(R.id.MessageOutputTextField);
 
-        final Button Encrypt = (Button) findViewById(R.id.EncryptButton);
-        final Button Decrypt = (Button) findViewById(R.id.DecryptButton);
-        final Button CleanTextFields = (Button) findViewById(R.id.CleanButton);
+        encryptButton  = (Button) findViewById(R.id.EncryptButton);
+        decryptButton  = (Button) findViewById(R.id.DecryptButton);
+        cleanTextFields  = (Button) findViewById(R.id.CleanButton);
 
-        CleanTextFields.setOnClickListener(new View.OnClickListener(){
+        cleanTextFields.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
 
-                InputText.setText("");
-                OutputText.setText("");
+                inputText.setText("");
+                outputText.setText("");
             }
         });
 
-        Encrypt.setOnClickListener(new View.OnClickListener(){
+        encrypt.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
 
-                String output = EncryptPi(InputText.getText().toString());
-                OutputText.setText(output);
+                String output = EncryptPi(inputText.getText().toString());
+                outputText.setText(output);
             }
         });
 
-        Decrypt.setOnClickListener(new View.OnClickListener(){
+        decrypt.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
 
-                String output = DecryptPi(InputText.getText().toString());
-                OutputText.setText(output);
+                String output = DecryptPi(inputText.getText().toString());
+                outputText.setText(output);
             }
         });
     }
