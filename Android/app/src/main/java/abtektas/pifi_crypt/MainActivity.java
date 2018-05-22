@@ -63,8 +63,8 @@ public class MainActivity extends AppCompatActivity {
         inputText = (EditText) findViewById(R.id.MessageInputTextField);
         outputText  = (EditText) findViewById(R.id.MessageOutputTextField);
 
-        encryptButton  = (Button) findViewById(R.id.EncryptButton);
-        decryptButton  = (Button) findViewById(R.id.DecryptButton);
+        encrypt  = (Button) findViewById(R.id.EncryptButton);
+        decrypt  = (Button) findViewById(R.id.DecryptButton);
         cleanTextFields  = (Button) findViewById(R.id.CleanButton);
 
         cleanTextFields.setOnClickListener(new View.OnClickListener(){
